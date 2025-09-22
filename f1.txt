@@ -1,0 +1,25 @@
+services:
+  web:
+    image: anirudhavula/trial1:latest
+    ports:
+      - "3000:8080"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: university
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+
+
+
+
+
+FROM tomcat:9.0
+COPY  ./target/event-app.war /usr/local/tomcat/webapps/ROOT.war
+CMD ["catalina.sh","run"]
