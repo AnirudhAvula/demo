@@ -1,1 +1,38 @@
 <p>Hello world</p>
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "MAVEN_HOME"
+    }
+
+    stages {
+        stage('git repo & clean') {
+            steps {
+                //bat
+                bat "git clone https://github.com/SarvikaSomishetty/eclipse-maven-projects.git"
+                bat "mvn clean -f eclipse-maven-projects"
+            }
+
+        }
+        
+        stage('install'){
+            steps{
+                bat "mvn install -f eclipse-maven-projects"
+            }
+        }
+        
+        stage('test'){
+            steps{
+                bat "mvn test -f eclipse-maven-projects"
+            }
+        }
+        stage('package'){
+            steps{
+                bat "mvn package -f eclipse-maven-projects"
+            }
+        }
+        
+    }
+}
